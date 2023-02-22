@@ -67,7 +67,7 @@ class AudioRecorder:
                     if silence_duration >= self.min_record_seconds and len(self.frames) > 0:
                         # Stop recording after a few seconds of silence
                         print(
-                            "\n\nRECORDING STOP: Silence detected longer than minimum duration")
+                            "\n\nRECORDING STOP: Silence detected longer than minimum duration\n")
                         break
 
                 # Stop recording after a fixed duration

@@ -34,6 +34,6 @@ while isTest:
     elif user_input.lower() == 'n':
         isTest = False  # ends the loop
         os.remove("audio/input.wav")
-        os.remove("audio/out.mp3")
+        os.remove("audio/output.mp3")
     else:
         print("Please enter a valid input")
