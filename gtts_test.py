@@ -1,6 +1,8 @@
 import os  # uses mpg321 (audio player) to play the audio file
 from gtts import gTTS  # Google Text-to-Speech
 
+# TODO: create class to handle audio
+
 # the text that you want to convert to audio
 toSpeak = "Welcome to the andromeda galaxy"
 
