@@ -10,3 +10,11 @@ class Transcriber:
         result = self.model.transcribe(file_path)
         self.text = result["text"]
         return self.text
+
+
+if __name__ == "__main__":
+    # example usage
+    transcriber = Transcriber()
+    transcribed_text = transcriber.transcribe("audio/input.wav")
+
+    transcribed_text = transcribed_text.replace(" ", "")

@@ -26,6 +26,7 @@ class AudioRecorder:
 
             # Record audio while sound is present
             silence_duration = 0
+            loading_counter = 0
             while True:
                 try:
                     data = stream.read(self.chunk)
@@ -38,7 +39,12 @@ class AudioRecorder:
                 if volume > self.threshold:
                     # Sound detected, start recording
                     if silence_duration == 0:
-                        print("Sound detected, recording started")
+                        loading_counter += 1
+                        if loading_counter % 10 == 0:
+                            print()
+                        else:
+                            print('* ', end='')
+
                     silence_duration = 0
                     self.frames.append(data)
                 else:
@@ -46,12 +52,13 @@ class AudioRecorder:
                     silence_duration += 1 / (self.rate / self.chunk)
                     if silence_duration >= self.min_record_seconds and len(self.frames) > 0:
                         # Stop recording after a few seconds of silence
-                        print("Recording stopped due to inactivity")
+                        print(
+                            "\n\nRECORDING STOP: Silence detected longer than minimum duration")
                         break
 
                 # Stop recording after a fixed duration
                 if len(self.frames) > self.max_record_seconds * (self.rate // self.chunk):
-                    print("Recording stopped due to maximum duration")
+                    print("\n\nRECORDING STOP: maximum duration reached")
                     break
 
             # Stop recording
@@ -71,5 +78,7 @@ class AudioRecorder:
             print("An error occurred:", e)
 
 
-recorder = AudioRecorder()
-audio_segment = recorder.record()
+if __name__ == "__main__":
+    # example usage
+    recorder = AudioRecorder()
+    audio_segment = recorder.record()
