@@ -10,11 +10,11 @@ To set up the project, follow these steps:
 
 1. Clone the repository: `git clone https://github.com/yourusername/yourproject.git`
 
-2. Create and activate a virtual environment in CLI:
+2. Create and activate a virtual environment in CLI (Unix)):
 
 ```
 $ pip install virtualenv
-$ virtualenv venv
+$ python3.10 -m venv venv
 $ source venv/bin/activate
 ```
 
@@ -33,7 +33,10 @@ If you encounter any issues with the project, try the following:
 ## Documentation
 
 - [gTTS](https://pypi.org/project/gTTS/)
-- [os](https://docs.python.org/3/library/os.html)
-- [mpg321](https://mpg321.sourceforge.net/)
 - [SpeechRecognition](https://pypi.org/project/SpeechRecognition/)
-- [Pygame](https://www.pygame.org/news)
+- [mpg321](https://mpg321.sourceforge.net/)
+- [os](https://docs.python.org/3/library/os.html)
+- [pyaudio](https://people.csail.mit.edu/hubert/pyaudio/)
+- [pydub](https://pypi.org/project/pydub/)
+- [wave](https://docs.python.org/3/library/wave.html)
+- [whisper](https://github.com/openai/whisper)

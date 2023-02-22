@@ -2,65 +2,74 @@ import pyaudio
 import wave
 from pydub import AudioSegment
 
-# Define recording parameters
-FORMAT = pyaudio.paInt16
-CHANNELS = 1
-RATE = 44100
-CHUNK = 1024
-THRESHOLD = 500  # Adjust this value as needed
-MIN_RECORD_SECONDS = 5
-MAX_RECORD_SECONDS = 30
 
-try:
-    # Initialize PyAudio
-    audio = pyaudio.PyAudio()
+class AudioRecorder:
+    def __init__(self, format=pyaudio.paInt16, channels=1, rate=44100, chunk=1024, threshold=500,
+                 min_record_seconds=5, max_record_seconds=30):
+        self.format = format
+        self.channels = channels
+        self.rate = rate
+        self.chunk = chunk
+        self.threshold = threshold
+        self.min_record_seconds = min_record_seconds
+        self.max_record_seconds = max_record_seconds
+        self.frames = []
 
-    # Open microphone stream
-    stream = audio.open(format=FORMAT, channels=CHANNELS,
-                        rate=RATE, input=True, frames_per_buffer=CHUNK)
-
-    # Record audio while sound is present
-    frames = []
-    silence_duration = 0
-    while True:
+    def record(self):
         try:
-            data = stream.read(CHUNK)
-        except KeyboardInterrupt:
-            # User has interrupted the program, stop recording
-            break
-        volume = max(abs(int(d))
-                     for d in wave.struct.unpack("%dh" % (len(data) / 2), data))
+            # Initialize PyAudio
+            audio = pyaudio.PyAudio()
 
-        if volume > THRESHOLD:
-            # Sound detected, start recording
-            if silence_duration == 0:
-                print("Sound detected, recording started")
+            # Open microphone stream
+            stream = audio.open(format=self.format, channels=self.channels,
+                                rate=self.rate, input=True, frames_per_buffer=self.chunk)
+
+            # Record audio while sound is present
             silence_duration = 0
-            frames.append(data)
-        else:
-            # No sound detected, stop recording if started
-            silence_duration += 1 / (RATE / CHUNK)
-            if silence_duration >= MIN_RECORD_SECONDS and len(frames) > 0:
-                # Stop recording after a few seconds of silence
-                print("Recording stopped due to inactivity")
-                break
+            while True:
+                try:
+                    data = stream.read(self.chunk)
+                except KeyboardInterrupt:
+                    # User has interrupted the program, stop recording
+                    break
+                volume = max(abs(int(d))
+                             for d in wave.struct.unpack("%dh" % (len(data) / 2), data))
 
-        # Stop recording after a fixed duration
-        if len(frames) > MAX_RECORD_SECONDS * (RATE // CHUNK):
-            print("Recording stopped due to maximum duration")
-            break
+                if volume > self.threshold:
+                    # Sound detected, start recording
+                    if silence_duration == 0:
+                        print("Sound detected, recording started")
+                    silence_duration = 0
+                    self.frames.append(data)
+                else:
+                    # No sound detected, stop recording if started
+                    silence_duration += 1 / (self.rate / self.chunk)
+                    if silence_duration >= self.min_record_seconds and len(self.frames) > 0:
+                        # Stop recording after a few seconds of silence
+                        print("Recording stopped due to inactivity")
+                        break
 
-    # Stop recording
-    stream.stop_stream()
-    stream.close()
-    audio.terminate()
+                # Stop recording after a fixed duration
+                if len(self.frames) > self.max_record_seconds * (self.rate // self.chunk):
+                    print("Recording stopped due to maximum duration")
+                    break
 
-    # Convert recorded audio to AudioSegment object
-    audio_segment = AudioSegment(data=b''.join(
-        frames), sample_width=2, frame_rate=RATE, channels=CHANNELS)
+            # Stop recording
+            stream.stop_stream()
+            stream.close()
+            audio.terminate()
 
-    # Save recorded audio as an MP3 file
-    audio_segment.export("audio/input.wav", format="wav")
+            # Convert recorded audio to AudioSegment object
+            audio_segment = AudioSegment(data=b''.join(
+                self.frames), sample_width=2, frame_rate=self.rate, channels=self.channels)
 
-except Exception as e:
-    print("An error occurred:", e)
+            # Save recorded audio as an MP3 file
+            audio_segment.export(
+                "audio/input.wav", format="wav")
+
+        except Exception as e:
+            print("An error occurred:", e)
+
+
+recorder = AudioRecorder()
+audio_segment = recorder.record()
