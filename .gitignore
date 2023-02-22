@@ -131,3 +131,4 @@ dmypy.json
 # Visual Studio Code-specific files and directories
 .vscode/
 *.code-workspace
+.DS_Store
