@@ -1,9 +1,9 @@
 import os
 import audio_player as out
-import audio_transcriber as feed
+import transcriber as feed
 
 
-transcriber = feed.AudioTranscriber()
+transcriber = feed.Transcriber()
 text = transcriber.transcribe("audio/input.wav")
 
 '''
@@ -15,6 +15,8 @@ player.play_audio()
 
 
 print("Hello World!")
+
+
 # print(os.listdir())
 # print(os.getcwd())
 # print(os.chdir("audio"))
