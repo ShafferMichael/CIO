@@ -132,3 +132,6 @@ dmypy.json
 .vscode/
 *.code-workspace
 .DS_Store
+
+# Developer Stuff
+scratch.py 
