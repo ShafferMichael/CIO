@@ -1,4 +1,13 @@
 import os
+import audio_player as out
+
+'''
+Initialize the audio player and generate the audio file with the text
+'''
+player = out.AudioPlayer("Welcome to the andromeda galaxy!")
+player.generate_audio()
+player.play_audio()
+
 
 print("Hello World!")
 # print(os.listdir())
