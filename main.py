@@ -2,6 +2,17 @@ import audio_player as out
 import transcriber as trans
 import audio_recorder as rec
 import time
+import os
+
+'''
+This code allows users to test a CIO system, that transcribes their spoken input, 
+generates an audio response, and plays it back. Upon running, the user will be prompted 
+to start a test session. When the user speaks, their audio is recorded by the AudioRecorder 
+class and transcribed using the Transcriber class. The text is then passed to the AudioPlayer 
+class, which generates an audio response that is played back to the user. If the user is 
+silent for more than 5 seconds, the program will automatically submit the recording 
+for transcription and playback. The elapsed time of each test session is printed upon completion.
+'''
 
 isTest = True
 while isTest:
@@ -22,13 +33,7 @@ while isTest:
         print("Elapsed time: ", elapsed_time)
     elif user_input.lower() == 'n':
         isTest = False  # ends the loop
+        os.remove("audio/input.wav")
+        os.remove("audio/out.mp3")
     else:
         print("Please enter a valid input")
-
-
-# print(os.listdir())
-# print(os.getcwd())
-# print(os.chdir("audio"))
-
-# ensure that the audio files are deleted after use of running gtts_test.py
-# os.remove("audio/out.mp3")

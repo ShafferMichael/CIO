@@ -2,6 +2,18 @@ import pyaudio
 import wave
 from pydub import AudioSegment
 
+'''
+This code contains a Python class, AudioRecorder, which records audio
+input from a microphone using PyAudio library. It records audio while
+sound is present and stops recording after a few seconds of silence.
+The minimum duration of the silence that stops the recording and the
+maximum duration of the recording are customizable parameters, as well
+as the format, number of channels, sample rate, chunk size, and threshold
+of the input. It also exports the recorded audio as a WAV file to a specified
+directory. The example usage at the bottom initializes an instance of the
+class and records audio using the default parameters.
+'''
+
 
 class AudioRecorder:
     def __init__(self, format=pyaudio.paInt16, channels=1, rate=44100, chunk=1024, threshold=500,
@@ -33,12 +45,14 @@ class AudioRecorder:
                 except KeyboardInterrupt:
                     # User has interrupted the program, stop recording
                     break
+                # Get the volume of the audio sample
                 volume = max(abs(int(d))
                              for d in wave.struct.unpack("%dh" % (len(data) / 2), data))
 
                 if volume > self.threshold:
                     # Sound detected, start recording
                     if silence_duration == 0:
+                        # print a loading bar
                         loading_counter += 1
                         if loading_counter % 10 == 0:
                             print()
