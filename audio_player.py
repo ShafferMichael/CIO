@@ -3,7 +3,7 @@ from gtts import gTTS
 
 
 class AudioPlayer:
-    def __init__(self, text, lang="en", filename="out.mp3", directory="audio"):
+    def __init__(self, text, lang="en", filename="output.mp3", directory="audio"):
         self.text = text
         self.lang = lang
         self.filename = filename

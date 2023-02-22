@@ -2,7 +2,7 @@ import whisper
 
 
 class AudioTranscriber:
-    def __init__(self, model_name="tiny.en"):
+    def __init__(self, model_name="medium.en"):
         self.model = whisper.load_model(model_name)
         self.text = None
 

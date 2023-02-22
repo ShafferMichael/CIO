@@ -1,10 +1,15 @@
 import os
 import audio_player as out
+import audio_transcriber as feed
+
+
+transcriber = feed.AudioTranscriber()
+text = transcriber.transcribe("audio/input.wav")
 
 '''
 Initialize the audio player and generate the audio file with the text
 '''
-player = out.AudioPlayer("Welcome to the andromeda galaxy!")
+player = out.AudioPlayer(text)
 player.generate_audio()
 player.play_audio()
 
@@ -15,4 +20,4 @@ print("Hello World!")
 # print(os.chdir("audio"))
 
 # ensure that the audio files are deleted after use of running gtts_test.py
-os.remove("audio/out.mp3")
+# os.remove("audio/out.mp3")
