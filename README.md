@@ -32,9 +32,8 @@ If you encounter any issues with the project, try the following:
 
 ## Documentation
 
-- [PocketSphinx](https://cmusphinx.github.io/)
-- [PyAudio](https://people.csail.mit.edu/hubert/pyaudio/)
+- [gTTS](https://pypi.org/project/gTTS/)
+- [os](https://docs.python.org/3/library/os.html)
+- [mpg321](https://mpg321.sourceforge.net/)
 - [SpeechRecognition](https://pypi.org/project/SpeechRecognition/)
-- [Festival Speech Synthesis System](http://www.cstr.ed.ac.uk/projects/festival/)
-- [Pyttsx3](https://pypi.org/project/pyttsx3/)
 - [Pygame](https://www.pygame.org/news)
