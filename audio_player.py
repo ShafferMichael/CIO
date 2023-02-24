@@ -19,20 +19,19 @@ class AudioPlayer:
         self.lang = lang
         self.filename = filename
         self.directory = directory
+        # initialize the gTTS object
+        self.tts = gTTS(text=self.text, lang=self.lang)
 
     def generate_audio(self):
-        # create a gTTS object
-        tts = gTTS(text=self.text, lang=self.lang)
-
         # save the audio file
-        filepath = os.path.join(self.directory, self.filename)
-        tts.save(filepath)
-
+        filepath = f"{self.directory}/{self.filename}"
+        self.tts.save(filepath)
         print(f"Audio file generated at {filepath}")
 
+    # play the audio
     def play_audio(self):
-        # play the audio
-        filepath = os.path.join(self.directory, self.filename)
+        # faster than os.path.join
+        filepath = f"{self.directory}/{self.filename}"
         os.system(f"mpg321 {filepath}")
 
 
